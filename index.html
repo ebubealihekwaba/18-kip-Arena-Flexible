@@ -656,7 +656,7 @@ function evalDesign(sc, sol, d){
   const cost = d.d1*sc.cAC + d.d2*sc.cB + d.d3*sc.cS;
   const ratio = cost / sol.best.cost;
   let costPts = 0;
-  if(adequate){ costPts = ratio <= 1.02 ? 15 : Math.max(0, 15*(1 - (ratio-1.02)/0.30)); }
+  if(adequate){ costPts = ratio <= 1.02 ? 15 : ratio <= 1.10 ? 12 : Math.max(0, 12*(1 - (ratio-1.10)/0.20)); }
   costPts = Math.round(costPts*10)/10;
   // capacity: smallest allowable ESALs among layer checks
   const caps = [Math.pow(10, logW18(s1, sol.zr, sc.S0, sol.dPSI, sc.EBS))];
@@ -1248,7 +1248,7 @@ function cssVar(n){ return getComputedStyle(document.documentElement).getPropert
 function renderBuild(p, sc, sol){
   const d = att.draft || {d1:4, d2:6, d3:8};
   p.innerHTML = `<div><span class="label">Milepost 4 · 55 points</span><h2>Build the section, layer by layer</h2></div>
-    <p>Choose thicknesses that pass every layered check at the lowest cost. Points: 30 for the three SN checks, 10 for AASHTO minimum thicknesses, 15 for cost against the cheapest adequate section (only if all checks pass).</p>
+    <p>Choose thicknesses that pass every layered check at the lowest cost. Points: 30 for the three SN checks, 10 for AASHTO minimum thicknesses, 15 for cost against the cheapest adequate section (only if all checks pass): within 2% earns 15, within 10% earns 12, then fewer points down to zero at 30% over.</p>
     <div class="layers">
       ${[["d1","Asphalt concrete","--l-ac",1,12,0.5,`a1 = ${fmt(sc.a1)}`],["d2","Granular base","--l-base",0,24,1,`a2 = ${fmt(sc.a2)}, m2 = ${fmt(sc.m)}`],["d3","Granular subbase","--l-sub",0,36,1,`a3 = ${fmt(sc.a3)}, m3 = ${fmt(sc.m)}`]].map(L=>`
       <div class="lrow"><span class="swatch" style="background:var(${L[2]})"></span>
