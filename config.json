@@ -2,11 +2,11 @@
   "sections": [
     {
       "name": "Section 01",
-      "code": "CEE-PD-CONCRETE"
+      "code": "CEE-PD-ASPHALT"
     },
     {
       "name": "Section 02",
-      "code": "PDC-02-BZ4A"
+      "code": "PDA-02-4463"
     }
   ],
   "maxAttempts": 2
